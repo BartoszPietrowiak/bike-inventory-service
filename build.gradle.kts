@@ -21,16 +21,18 @@ repositories {
 extra["springCloudVersion"] = "2022.0.3"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.cloud:spring-cloud-starter-config")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-artemis")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.micrometer:micrometer-tracing-bridge-brave")
 	implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation ("org.mapstruct:mapstruct:1.5.5.Final")
 	implementation("com.h2database:h2:2.1.214")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.7")
-	implementation("jakarta.validation:jakarta.validation-api:3.0.2")
-	implementation("org.springframework:spring-jms")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation ("org.mapstruct:mapstruct-processor:1.5.5.Final")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.projectlombok:lombok")
@@ -48,3 +50,7 @@ dependencyManagement {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+tasks.withType<JavaCompile>() {
+		options.compilerArgs.add("-Amapstruct.defaultComponentModel=spring")
+}
+

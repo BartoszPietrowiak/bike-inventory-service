@@ -34,6 +34,7 @@ public class AllocationResultListener {
         } catch (Exception e) {
             log.error("Allocation failed for Order Id:" + request.getBikeOrderDto().getId());
             builder.allocationError(true);
+            throw (e);
         }
 
         jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESULT_QUEUE, builder.build());

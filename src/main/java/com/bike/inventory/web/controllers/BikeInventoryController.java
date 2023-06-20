@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class BeerInventoryController {
+public class BikeInventoryController {
 
     private final BikeInventoryRepository bikeInventoryRepository;
     private final BikeInventoryMapper bikeInventoryMapper;

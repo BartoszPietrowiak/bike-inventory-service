@@ -20,12 +20,12 @@ public class AllocationServiceImpl implements AllocationService {
 
     @Override
     public Boolean allocateOrder(BikeOrderDto bikeOrderDto) {
-        log.debug("Allocating OrderId: " + bikeOrderDto.getId());
+        log.info("Allocating OrderId: " + bikeOrderDto.getId());
 
         AtomicInteger totalOrdered = new AtomicInteger();
         AtomicInteger totalAllocated = new AtomicInteger();
 
-        bikeOrderDto.getBikeOrderLines().forEach(bikeOrderLine -> {
+        bikeOrderDto.getBikeOrderLine().forEach(bikeOrderLine -> {
             if ((((bikeOrderLine.getOrderQuantity() != null ? bikeOrderLine.getOrderQuantity() : 0)
                     - (bikeOrderLine.getAllocatedQuantity() != null ? bikeOrderLine.getAllocatedQuantity() : 0)) > 0)) {
                 allocateBeerOrderLine(bikeOrderLine);
@@ -34,7 +34,7 @@ public class AllocationServiceImpl implements AllocationService {
             totalAllocated.set(totalAllocated.get() + (bikeOrderLine.getAllocatedQuantity() != null ? bikeOrderLine.getAllocatedQuantity() : 0));
         });
 
-        log.debug("Total Ordered: " + totalOrdered.get() + " Total Allocated: " + totalAllocated.get());
+        log.info("Total Ordered: " + totalOrdered.get() + " Total Allocated: " + totalAllocated.get());
 
         return totalOrdered.get() == totalAllocated.get();
     }
@@ -43,7 +43,7 @@ public class AllocationServiceImpl implements AllocationService {
     public void deallocateOrder(BikeOrderDto bikeOrderDto) {
         log.debug("Deallocating OrderId: " + bikeOrderDto.getId());
 
-        bikeOrderDto.getBikeOrderLines().forEach(bikeOrderLine -> {
+        bikeOrderDto.getBikeOrderLine().forEach(bikeOrderLine -> {
             BikeInventory bikeInventory = BikeInventory
                     .builder()
                     .bikeId(bikeOrderLine.getBikeId())

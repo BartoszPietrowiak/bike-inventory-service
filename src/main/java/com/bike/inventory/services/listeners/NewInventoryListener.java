@@ -20,7 +20,7 @@ public class NewInventoryListener {
     @Transactional
     @JmsListener(destination = JmsConfig.NEW_INVENTORY_QUEUE)
     public void listen(NewInventoryEvent event) {
-        log.debug("Get Event: " + event.toString());
+        log.info("Get Event: " + event.toString());
 
         bikeInventoryRepository.save(BikeInventory.builder()
                 .bikeId(event.getBikeDto().getId())
